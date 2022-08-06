@@ -12,10 +12,10 @@ export(int) var ADITIONAL_FALL_GRAVITY := 2
 
 var velocity := Vector2.ZERO
 
-onready var animatedSprite := $AnimatedSprite
+onready var animatedSprite := $AnimatedSprite as AnimatedSprite
 
 func _ready() -> void:
-    animatedSprite.frames = load("res://PlayerGreenSkin.tres")
+    animatedSprite.frames = load("res://PlayerGreenSkin.tres") as SpriteFrames
 
 func _physics_process(_delta: float) -> void:
     apply_gravity()
