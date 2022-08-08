@@ -2,21 +2,47 @@ extends KinematicBody2D
 class_name Player
 
 
+enum { MOVE, CLIMB }
+
 export(Resource) var movement_data: Resource = load("res://DefaultPlayerMovementData.tres") as PlayerMovementData
 
 var velocity := Vector2.ZERO
+var state := MOVE
 
 onready var animatedSprite := $AnimatedSprite as AnimatedSprite
+onready var ladderCheck := $LadderCheck as RayCast2D
 
 func _ready() -> void:
     animatedSprite.frames = load("res://PlayerGreenSkin.tres") as SpriteFrames
 
 func _physics_process(_delta: float) -> void:
-    apply_gravity()
-
     var input := Vector2.ZERO
+    input.x = Input.get_axis("ui_left", "ui_right")
+    input.y = Input.get_axis("ui_up", "ui_down")
 
-    input.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+    match state:
+        MOVE: move_state(input)
+        CLIMB: climb_state(input)
+
+func _input(_event: InputEvent) -> void:
+    if Input.is_key_pressed(KEY_F):
+        set_fast_player_mode()
+
+func apply_gravity() -> void:
+    velocity.y += movement_data.GRAVITY
+    velocity.y = min(velocity.y, 200)
+
+func apply_friction() -> void:
+    velocity.x = move_toward(velocity.x, 0, movement_data.FRICTION)
+
+func apply_acceleration(amount: float) -> void:
+    velocity.x = move_toward(velocity.x, movement_data.MAX_SPEED * amount, movement_data.ACCELETATION)
+
+func move_state(input: Vector2) -> void:
+    if is_on_ladder() and Input.is_action_pressed("ui_up"):
+        state = CLIMB
+
+    apply_gravity()
 
     if input.x == 0:
         apply_friction()
@@ -50,19 +76,21 @@ func _physics_process(_delta: float) -> void:
         animatedSprite.animation = "run"
         animatedSprite.frame = 1
 
-func _input(event: InputEvent) -> void:
-    if Input.is_key_pressed(KEY_F):
-        set_fast_player_mode()
+func climb_state(input: Vector2) -> void:
+    if not is_on_ladder(): state = MOVE
 
-func apply_gravity() -> void:
-    velocity.y += movement_data.GRAVITY
-    velocity.y = min(velocity.y, 200)
+    if input.length() != 0:
+        animatedSprite.animation = "run"
+    else:
+        animatedSprite.animation = "idle"
 
-func apply_friction() -> void:
-    velocity.x = move_toward(velocity.x, 0, movement_data.FRICTION)
+    velocity = input * 50
+    velocity = move_and_slide(velocity, Vector2.UP)
 
-func apply_acceleration(amount: float) -> void:
-    velocity.x = move_toward(velocity.x, movement_data.MAX_SPEED * amount, movement_data.ACCELETATION)
+func is_on_ladder() -> bool:
+    if not ladderCheck.is_colliding(): return false
+    if not ladderCheck.get_collider() is Ladder: return false
+    return true
 
 func set_fast_player_mode() -> void:
     movement_data = load("res://FastPlayerMovementData.tres") as PlayerMovementData
