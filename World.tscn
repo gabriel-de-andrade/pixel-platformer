@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Spikes.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -6,49 +6,64 @@
 [ext_resource path="res://World.gd" type="Script" id=4]
 [ext_resource path="res://WalkingEnemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Ladder.tscn" type="PackedScene" id=6]
+[ext_resource path="res://MovingSpikeEnemy.tscn" type="PackedScene" id=7]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 36, -54, 0, 0, 0, 0, -36, -54, 0, 0, 0, 0, -36, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 54, 0, 0, 0, 0, 0, 117 )
+}
 
 [node name="World" type="Node2D"]
 script = ExtResource( 4 )
 
 [node name="TileMap" parent="." instance=ExtResource( 3 )]
-tile_data = PoolIntArray( -196596, 0, 0, -196595, 0, 0, -196594, 0, 0, -196593, 0, 0, -196592, 0, 0, -196591, 0, 0, -131068, 0, 0, -131067, 0, 0, -131066, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, 196616, 0, 0, 196617, 0, 0, 196619, 1, 65537, 196620, 1, 65539, 262150, 1, 65537, 262151, 1, 65538, 262152, 1, 65538, 262153, 1, 65538, 262154, 1, 65538, 262155, 1, 65541, 262156, 1, 65540, 262157, 1, 65539, 262162, 1, 65537, 262163, 1, 65538, 262164, 1, 65538, 262165, 1, 65539, 327683, 1, 65537, 327684, 1, 65538, 327685, 1, 65538, 327686, 1, 65541, 327687, 1, 393218, 327688, 1, 393218, 327689, 1, 393218, 327690, 1, 393218, 327691, 1, 393218, 327692, 1, 393218, 327693, 1, 65540, 327694, 1, 65538, 327695, 1, 65538, 327696, 1, 65538, 327697, 1, 65538, 327698, 1, 65541, 327699, 1, 393218, 327700, 1, 393218, 327701, 1, 393219, 393218, 1, 65537, 393219, 1, 65541, 393220, 1, 4, 393221, 1, 458754, 393222, 1, 5, 393223, 1, 4, 393224, 1, 458754, 393225, 1, 5, 393226, 1, 393218, 393227, 1, 393218, 393228, 1, 393218, 393229, 1, 393218, 393230, 1, 393218, 393231, 1, 393218, 393232, 1, 393218, 393233, 1, 4, 393234, 1, 458754, 393235, 1, 5, 393236, 1, 393218, 393237, 1, 393219, 458754, 1, 393217, 458755, 1, 4, 458756, 1, 458755, 458758, 1, 393217, 458759, 1, 393219, 458761, 1, 458753, 458762, 1, 458754, 458763, 1, 5, 458764, 1, 4, 458765, 1, 458754, 458766, 1, 5, 458767, 1, 4, 458768, 1, 458754, 458769, 1, 458755, 458771, 1, 458753, 458772, 1, 5, 458773, 1, 393219, 524290, 1, 458753, 524291, 1, 458755, 524294, 1, 458753, 524295, 1, 458755, 524299, 1, 458753, 524300, 1, 458755, 524302, 1, 458753, 524303, 1, 458755, 524308, 1, 458753, 524309, 1, 458755 )
-
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 243, -72 )
-z_index = 10
-
-[node name="Spikes" parent="." instance=ExtResource( 1 )]
-position = Vector2( 117, 72 )
-
-[node name="Spikes2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 135, 72 )
-
-[node name="Enemy" parent="." instance=ExtResource( 5 )]
-position = Vector2( 288, 90 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Enemy2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 331, 72 )
-__meta__ = {
-"_edit_group_": true
-}
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 65548, 0, 0, 262145, 1, 65537, 262146, 1, 65539, 327680, 1, 65537, 327681, 1, 65541, 327682, 1, 65540, 327683, 1, 65539, 327693, 1, 65537, 327694, 1, 65539, 327699, 1, 65537, 327700, 1, 65538, 327701, 1, 65538, 327702, 1, 65539, 393216, 1, 393217, 393217, 1, 393218, 393218, 1, 393218, 393219, 1, 65540, 393220, 1, 65538, 393221, 1, 65538, 393222, 1, 65538, 393223, 1, 65538, 393224, 1, 65539, 393228, 1, 65537, 393229, 1, 65541, 393230, 1, 65540, 393231, 1, 65538, 393232, 1, 65538, 393233, 1, 65538, 393234, 1, 65538, 393235, 1, 65541, 393236, 1, 393218, 393237, 1, 393218, 393238, 1, 393219, 458752, 1, 393217, 458753, 1, 393218, 458754, 1, 393218, 458755, 1, 393218, 458756, 1, 393218, 458757, 1, 393218, 458758, 1, 393218, 458759, 1, 393218, 458760, 1, 65540, 458761, 1, 65538, 458762, 1, 65538, 458763, 1, 65538, 458764, 1, 65541, 458765, 1, 393218, 458766, 1, 393218, 458767, 1, 393218, 458768, 1, 393218, 458769, 1, 393218, 458770, 1, 393218, 458771, 1, 393218, 458772, 1, 393218, 458773, 1, 393218, 458774, 1, 393219, 524288, 1, 458753, 524289, 1, 458754, 524290, 1, 458754, 524291, 1, 458754, 524292, 1, 458754, 524293, 1, 458754, 524294, 1, 458754, 524295, 1, 458754, 524296, 1, 458754, 524297, 1, 458754, 524298, 1, 458754, 524299, 1, 458754, 524300, 1, 458754, 524301, 1, 458754, 524302, 1, 458754, 524303, 1, 458754, 524304, 1, 458754, 524305, 1, 458754, 524306, 1, 458754, 524307, 1, 458754, 524308, 1, 458754, 524309, 1, 458754, 524310, 1, 458755 )
 
 [node name="Ladder" parent="." instance=ExtResource( 6 )]
-position = Vector2( 198, -54 )
+position = Vector2( 126, 0 )
 
 [node name="Ladder2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 198, -36 )
+position = Vector2( 126, 18 )
 
 [node name="Ladder3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 198, -18 )
+position = Vector2( 126, 36 )
 
 [node name="Ladder4" parent="." instance=ExtResource( 6 )]
-position = Vector2( 198, 0 )
+position = Vector2( 126, 54 )
 
 [node name="Ladder5" parent="." instance=ExtResource( 6 )]
-position = Vector2( 198, 18 )
+position = Vector2( 126, 72 )
 
 [node name="Ladder6" parent="." instance=ExtResource( 6 )]
-position = Vector2( 198, 36 )
+position = Vector2( 126, 90 )
+
+[node name="Spikes" parent="." instance=ExtResource( 1 )]
+position = Vector2( 171, 126 )
+
+[node name="Spikes2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 189, 126 )
+
+[node name="Spikes3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 207, 126 )
+
+[node name="WalkingEnemy" parent="." instance=ExtResource( 5 )]
+position = Vector2( 378, 90 )
+
+[node name="MovingSpikeEnemy" parent="." instance=ExtResource( 7 )]
+position = Vector2( 27, 45 )
+curve = SubResource( 1 )
+animation_speed = 0.7
+
+[node name="MovingSpikeEnemy2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 189, -9 )
+curve = SubResource( 2 )
+animation_type = 1
+animation_speed = 1.0
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 99, 90 )
