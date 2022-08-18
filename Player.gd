@@ -97,8 +97,13 @@ func climb_state(input: Vector2) -> void:
     velocity = input * movement_data.CLIMB_SPEED
     velocity = move_and_slide(velocity, Vector2.UP)
 
+func die() -> void:
+    SoundPlayer.play_sound(SoundPlayer.HURT)
+    get_tree().reload_current_scene()
+
 func input_jump() -> void:
     if Input.is_action_pressed("ui_up") or buffered_jump:
+        SoundPlayer.play_sound(SoundPlayer.JUMP)
         velocity.y = movement_data.JUMP_FORCE
         buffered_jump = false
         coyote_jump = false
@@ -118,6 +123,7 @@ func input_jump_release() -> void:
 
 func input_double_jump() -> void:
     if Input.is_action_just_pressed("ui_up") and double_jump > 0:
+        SoundPlayer.play_sound(SoundPlayer.JUMP)
         velocity.y = movement_data.JUMP_FORCE
         double_jump -= 1
 
